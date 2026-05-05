@@ -4,7 +4,7 @@ services:
   mysql:
     image: mysql:8.0
     environment:
-      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: plataforma_ventas
     ports:
       - "3306:3306"
@@ -17,6 +17,7 @@ services:
     build: ./backend
     ports:
       - "3001:3000"
+    env_file: .env
     depends_on:
       - mysql
     networks:

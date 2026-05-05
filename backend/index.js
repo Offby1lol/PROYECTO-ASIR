@@ -4,11 +4,10 @@ const mysql = require('mysql2/promise');
 const cors = require('cors');
 const client = require('prom-client'); //Prometheus para métricas
 const jwt = require('jsonwebtoken');//Autenticación con tokens
-const bcrypt = require('bcrypt');//EN ESTE CASO NO SE USA POR PROBLEMAS DE IMPLEMENTACIÓN
 //Inicialización de la app Express
 const app = express();
 const port = 3000;
-const JWT_SECRET = 'clave_super_secreta';//Secreto para firmar tokens
+const JWT_SECRET = process.env.JWT_SECRET;//Secreto para firmar tokens
 //Middlewares globales
 app.use(cors());        //Habilita CORS
 app.use(express.json());//Habilita lectura de JSON en las peticiones
@@ -16,7 +15,7 @@ app.use(express.json());//Habilita lectura de JSON en las peticiones
 const pool = mysql.createPool({
   host: 'mysql',
   user: 'root',
-  password: 'rootpass',
+  password: process.env.MYSQL_ROOT_PASSWORD,
   database: 'plataforma_ventas'
 });
 
@@ -59,11 +58,11 @@ function authMiddleware(req, res, next) {
 }
 
 //Usuarios definidos manualmente
-const ADMIN_EMAIL = 'admin@admin.com';
-const ADMIN_PASSWORD = 'admin123';
+const ADMIN_EMAIL = 'admin@demo.com';
+const ADMIN_PASSWORD = 'demo1234';
 
-const USER_EMAIL = 'usuario@usuario.com';
-const USER_PASSWORD = 'usuario123';
+const USER_EMAIL = 'user@demo.com';
+const USER_PASSWORD = 'demo1234';
 //Ruta de inicio de sesión
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;

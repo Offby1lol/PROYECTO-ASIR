@@ -1,15 +1,12 @@
-FROM node:16
+FROM node:20
 
 WORKDIR /app
 
-# 👇 Copia todo antes de instalar
+# Copia todo antes de instalar
 COPY . .
 
-# 👇 Instala deps después de tener todo
+# Instala deps después de tener todo
 RUN npm install
-
-# Instala cliente MySQL opcional
-RUN apt-get update && apt-get install -y default-mysql-client
 
 EXPOSE 3000
 
